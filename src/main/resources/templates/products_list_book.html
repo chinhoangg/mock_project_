@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <title>Product</title>
+    <link rel="stylesheet" th:href="@{../css/bootstrap/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{../css/main.css}"/>
+    <noscript>
+        <link rel="stylesheet" th:href="@{../css/noscript.css}"/>
+    </noscript>
+</head>
+<body class="is-preload">
+<!-- Wrapper -->
+<div id="wrapper">
+
+    <!-- Header -->
+    <header id="header">
+        <div class="inner">
+
+            <!-- Logo -->
+            <a th:href="@{/}" class="logo">
+                <span class="fa fa-book"></span> <span class="title">Book Online Store Website</span>
+            </a>
+
+            <!-- Nav -->
+            <nav>
+                <ul>
+                    <li><a href="#menu">Menu</a></li>
+                </ul>
+            </nav>
+
+        </div>
+    </header>
+
+    <!-- Menu -->
+    <nav id="menu">
+        <h2>Menu</h2>
+        <ul>
+            <li><a th:href="@{/}" class="active">Home</a></li>
+
+            <li><a th:href="@{/product}">Products</a></li>
+
+            <li sec:authorize="hasAnyRole('ADMIN')"><a th:href="@{/admin-home}">Dash Board</a></li>
+            <li sec:authorize="isAuthenticated()" >
+                <a th:href="@{'/user-profile/'+ ${user.getId()}}">Profile</a>
+            </li>
+
+            <li sec:authorize="hasAnyRole('USER', 'ADMIN')"><a th:href="@{/my-book-case}">My BookCase</a></li>
+<!--            <li><a th:href="@{/mybookcase}">My BookCase</a></li>-->
+            <li sec:authorize="isAuthenticated()">
+                <form th:action="@{/logout}" method="post">
+                    <button class="btn" type="submit">Log out</button>
+                </form>
+            </li>
+            <li sec:authorize="!isAuthenticated()"><a th:href="@{/login}">Login</a></li>
+            <li sec:authorize="!isAuthenticated()"><a th:href="@{/process_register}">Sign up</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main -->
+    <div id="main">
+        <div class="inner">
+            <h1>Products</h1>
+            <div class="image main">
+                <img th:src="@{../images/banner-image-6-1920x500.jpg}" class="img-fluid" alt=""/>
+            </div>
+            <!-- Products -->
+            <div>
+                <form th:action="@{/page/1}" class="col-3">
+                    <div class="form-outline input-group">
+                        <span><input style="margin-top: 10px; width: auto" class="form-control mr-sm-2" type="search" placeholder="search" aria-label="Search" name="keyword" th:value="${keyword}"></span>
+                        <button class="my-2 my-sm-0" type="submit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search-heart" viewBox="0 0 16 16">
+                                <path d="M6.5 4.482c1.664-1.673 5.825 1.254 0 5.018-5.825-3.764-1.664-6.69 0-5.018Z"/>
+                                <path d="M13 6.5a6.471 6.471 0 0 1-1.258 3.844c.04.03.078.062.115.098l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1.007 1.007 0 0 1-.1-.115h.002A6.5 6.5 0 1 1 13 6.5ZM6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11Z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <section class="tiles">
+                <th:block th:each="book: ${listBook}">
+                    <article class="style2">
+                        <span class="image">
+                            <img th:src="@{../images/blog-4-720x480.jpg}" alt=""/>
+                        </span>
+                        <a th:href="@{/bookdetail(bookid=${book.id})}">
+                            >
+                            <p >
+                                <h2 style="color: black" th:text="${book.bookTitle}"></h2><br>
+                                <p style="text-transform: uppercase;">[[${book.author}]]</p><br>
+                                <strong style="font-size: 27px; color: #ffc513; text-transform: uppercase;">[[${book.brief}]]</strong>
+<!--                                <p style="color: white" th:text="${book.content}" ></p>-->
+                            </p>
+                        </a>
+                    </article>
+                    <a th:href="@{/my-book-case/add/{id}(id=${book.id})}">
+                        <svg style="margin-top: 48px; margin-left: 0" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box2-heart" viewBox="0 0 16 16">
+                            <path d="M8 7.982C9.664 6.309 13.825 9.236 8 13 2.175 9.236 6.336 6.31 8 7.982Z"/>
+                            <path d="M3.75 0a1 1 0 0 0-.8.4L.1 4.2a.5.5 0 0 0-.1.3V15a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V4.5a.5.5 0 0 0-.1-.3L13.05.4a1 1 0 0 0-.8-.4h-8.5Zm0 1H7.5v3h-6l2.25-3ZM8.5 4V1h3.75l2.25 3h-6ZM15 5v10H1V5h14Z"/>
+                        </svg>
+                    </a>
+                </th:block>
+
+            </section>
+            <div class="text-center">
+                <div class="text-center">
+                    <span>Total Items: [[${totalItems}]] - Page [[${currentPage}]] of [[${totalPages}]]</span>
+                </div>
+                <nav class="pagination justify-content-center flex-wrap" th:with="pageUrlPostFix = ${keyword != null ? '?keyword=' + keyword : ''}">
+                    <li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
+                        <a th:href="@{'/page/1' + ${keyword != null ? '?keyword=' + keyword : '' }}" class="page-link">First</a>
+                    </li>
+                    <li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
+                        <a th:href="@{'/page/' + ${currentPage - 1} + ${pageUrlPostFix}}" class="page-link">Previous</a>
+                    </li>
+
+                    <th:block th:if="${totalPages <= 10}">
+                        <li  th:each="i: ${#numbers.sequence(1 , totalPages)}" class="page-item">
+                            <a th:href="@{'/page/' + ${i} + ${pageUrlPostFix}}" class="page-link">[[${i}]]</a>
+                        </li>
+                    </th:block>
+                    <th:block th:if="${totalPages > 10}">
+                        <th:block th:if="${currentPage <=5 || currentPage > totalPages - 4}">
+                            <li  th:each="i: ${#numbers.sequence(1 , 5)}" class="page-item">
+                                <a th:href="@{'/page/' + ${i} + ${pageUrlPostFix}}" class="page-link">[[${i}]]</a>
+                            </li>
+
+                            <a th:href="@{'/page/6'}" class="page-link">...</a>
+
+                            <li  th:each="i: ${#numbers.sequence(totalPages - 4 , totalPages)}" class="page-item">
+                                <a th:href="@{'/page/' + ${i} + ${pageUrlPostFix}}" class="page-link">[[${i}]]</a>
+                            </li>
+                        </th:block>
+
+                        <th:block th:if="${currentPage > 5 && currentPage <= totalPages - 4}">
+                            <a th:href="@{'/page/' + ${currentPage - 5} + ${pageUrlPostFix}}" class="page-link">...</a>
+
+                            <li  th:each="i: ${#numbers.sequence(currentPage - 4 , currentPage + 4)}" class="page-item">
+                                <a th:href="@{'/page/' + ${i} + ${pageUrlPostFix}}" class="page-link">[[${i}]]</a>
+                            </li>
+                            <a th:href="@{'/page/' + ${currentPage + 4} + ${pageUrlPostFix}}" class="page-link">...</a>
+                        </th:block>
+                    </th:block>
+                    <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
+                        <a th:href="@{'/page/' + ${currentPage + 1} + ${pageUrlPostFix}}" class="page-link">Next</a>
+                    </li>
+                    <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
+                        <a th:href="@{'/page/' + ${totalPages} + ${pageUrlPostFix}}" class="page-link">Last</a>
+                    </li>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="inner">
+            <section>
+                <ul class="icons">
+                    <li><a href="#" class="icon style2 fa-twitter"><span class="label">Twitter</span></a></li>
+                    <li><a href="#" class="icon style2 fa-facebook"><span class="label">Facebook</span></a></li>
+                    <li><a href="#" class="icon style2 fa-instagram"><span class="label">Instagram</span></a></li>
+                    <li><a href="#" class="icon style2 fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                </ul>
+
+                &nbsp;
+            </section>
+
+            <ul class="copyright">
+                <li>Copyright © 2020 Company Name</li>
+                <li>Template by: <a href="https://www.phpjabbers.com/">PHPJabbers.com</a></li>
+            </ul>
+        </div>
+    </footer>
+
+</div>
+
+<!-- Scripts -->
+<script th:src="@{../js/jquery.min.js}"></script>
+<script th:src="@{../js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{../js/jquery.scrolly.min.js}"></script>
+<script th:src="@{../js/jquery.scrollex.min.js}"></script>
+<script th:src="@{../js/main.js}"></script>
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html>
+<head>
+  <title>PHPJabbers.com | Free Book Online Store Website Template</title>
+  <meta charset="utf-8"/>
+  <title>Home Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+  <link rel="stylesheet" th:href="@{../../css/bootstrap/bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{../../css/main.css}">
+  <noscript>
+    <link rel="stylesheet" th:href="@{../../css/noscript.css}">
+  </noscript>
+</head>
+<body class="is-preload">
+<!-- Wrapper -->
+<div id="wrapper">
+  <!-- Header -->
+  <header id="header">
+    <div class="inner">
+      <!-- Logo -->
+      <a th:href="@{/}" class="logo">
+        <span class="fa fa-book"></span> <span class="title">Book Online Store Website</span>
+      </a>
+      <!-- Nav -->
+      <nav>
+        <ul>
+          <li><a href="#menu">Menu</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Menu -->
+  <nav id="menu">
+    <h2>Menu</h2>
+    <ul>
+      <li><a th:href="@{/}">Home</a></li>
+
+      <li><a th:href="@{/product}">Products</a></li>
+
+      <li sec:authorize="hasAnyRole('ADMIN')"><a th:href="@{/admin-home}">Dash Board</a></li>
+      <li sec:authorize="isAuthenticated()" >
+        <a th:href="@{'/user-profile/'+ ${user.getId()}}">Profile</a>
+      </li>
+
+      <li sec:authorize="hasAnyRole('USER', 'ADMIN')" class="active"><a th:href="@{/my-book-case}">My BookCase</a></li>
+      <!--      <li class="active"><a th:href="@{/mybookcase}">My BookCase</a></li>-->
+      <li sec:authorize="isAuthenticated()">
+        <form th:action="@{/logout}" method="post">
+          <button class="btn" type="submit">Log out</button>
+        </form>
+      </li>
+      <li sec:authorize="!isAuthenticated()"><a th:href="@{/login}">Login</a></li>
+      <li sec:authorize="!isAuthenticated()"><a th:href="@{/process_register}">Sign up</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main -->
+  <div id="main">
+    <div class="inner">
+      <h1>User Profile</h1>
+      <div class="image main">
+        <img th:src="@{../../images/banner-image-6-1920x500.jpg}" class="img-fluid" alt=""/>
+      </div>
+      <!-- Products -->
+      <form th:action="@{/user-profile/save}" method="post" th:object="${userByID}">
+        <div class="container">
+          <div class="main-body">
+
+            <div class="row gutters-sm">
+              <div class="col-md-4 mb-3">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="d-flex flex-column align-items-center text-center">
+                      <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
+                      <div class="mt-3">
+                        <h4 th:utext="*{username}" ></h4>
+                        <p class="text-muted font-size-sm" th:utext="*{email}"></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-8">
+                <div class="card mb-3">
+                  <div class="card-body">
+                    <div class="row">
+
+                      <input style="border: 0;" th:field="*{id}" hidden></input>
+                      <div class="col-sm-3">
+                        <h6 class="mb-0">First Name</h6>
+                      </div>
+                      <div class="col-sm-9 text-secondary">
+                        <input style="border: 0;" th:field="*{firstName}"></input>
+                      </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <h6 class="mb-0">Last Name</h6>
+                      </div>
+                      <div class="col-sm-9 text-secondary">
+                        <input style="border: 0;" th:field="*{lastName}"></input>
+                      </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <h6 class="mb-0">Email</h6>
+                      </div>
+                      <div class="col-sm-9 text-secondary">
+                        <input style="border: 0;" th:field="*{email}"></input>
+                      </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <h6 class="mb-0">Phone</h6>
+                      </div>
+                      <div class="col-sm-9 text-secondary">
+                        <input style="border: 0;" th:field="*{phone}"></input>
+                      </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <h6 class="mb-0">Gender</h6>
+                      </div>
+                      <div class="col-sm-9 text-secondary">
+                        <select name="type" th:field="*{gender}" class="selectpicker form-control"
+                                data-style="py-0">
+                          <option value="0">Female</option>
+                          <option value="1">Male</option>
+
+                        </select>
+                    </div>
+                    </div>
+                    <hr>
+
+                      <div class="row">
+                        <div class="col-md-6"><button class="btn btn-outline-info " type="submit" >Save</button>
+                        <button class="btn btn-outline-primary "  th:href="@{'/user-profile/'+ *{id}}">Back</button></div>
+                      </div>
+
+                  </div>
+                </div>
+
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer id="footer">
+    <div class="inner">
+      <section>
+        <h2>Contact Info</h2>
+
+        <ul class="alt">
+          <li><span class="fa fa-envelope-o"></span> <a href="#">contact@company.com</a></li>
+          <li><span class="fa fa-phone"></span> +1 333 4040 5566</li>
+          <li><span class="fa fa-map-pin"></span> 212 Barrington Court New York, ABC 10001 United States of
+            America
+          </li>
+        </ul>
+
+        <h2>Follow Us</h2>
+
+        <ul class="icons">
+          <li><a href="#" class="icon style2 fa-twitter"><span class="label">Twitter</span></a></li>
+          <li><a href="#" class="icon style2 fa-facebook"><span class="label">Facebook</span></a></li>
+          <li><a href="#" class="icon style2 fa-instagram"><span class="label">Instagram</span></a></li>
+          <li><a href="#" class="icon style2 fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        </ul>
+      </section>
+
+      <ul class="copyright">
+        <li>Copyright © 2020 Company Name</li>
+        <li>Template by: <a href="https://www.phpjabbers.com/">PHPJabbers.com</a></li>
+      </ul>
+    </div>
+  </footer>
+
+</div>
+
+<!-- Scripts -->
+<script th:src="@{../../js/jquery.min.js}"></script>
+<script th:src="@{../../js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{../../js/jquery.scrolly.min.js}"></script>
+<script th:src="@{../../js/jquery.scrollex.min.js}"></script>
+<script th:src="@{../../js/main.js}"></script>
+
+</body>
+</html>

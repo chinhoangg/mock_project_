@@ -1,0 +1,183 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>My book case</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+  <link rel="stylesheet" th:href="@{css/bootstrap/bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{css/main.css}">
+  <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css}">
+  <noscript>
+    <link rel="stylesheet" th:href="@{css/noscript.css}">
+  </noscript>
+  <style>
+    @media (min-width: 1025px) {
+      .h-custom {
+        height: 100vh !important;
+      }
+    }
+
+    h1 {
+      margin: 0;
+    }
+
+    .table th {
+      border-top: 0px;
+    }
+
+    .table tbody tr:nth-child(2n + 1) {
+      background-color: #fff;
+    }
+
+    .btnn {
+      border-radius: 30px;
+    }
+
+    .table td,
+    .table th {
+      padding: 0.75rem;
+      vertical-align: middle;
+      border-top: 1px solid #dee2e6;
+    }
+  </style>
+</head>
+<body class="is-preload">
+<!-- Wrapper -->
+<div id="wrapper">
+
+  <!-- Header -->
+  <header id="header">
+    <div class="inner">
+
+      <!-- Logo -->
+      <a th:href="@{/}" class="logo">
+        <span class="fa fa-book"></span> <span class="title">Book Online Store Website</span>
+      </a>
+
+      <!-- Nav -->
+      <nav>
+        <ul>
+          <li><a href="#menu">Menu</a></li>
+        </ul>
+      </nav>
+
+    </div>
+  </header>
+
+  <!-- Menu -->
+  <nav id="menu">
+    <h2>Menu</h2>
+    <ul>
+      <li><a th:href="@{/}">Home</a></li>
+
+      <li><a th:href="@{/product}">Products</a></li>
+
+      <li sec:authorize="hasAnyRole('ADMIN')"><a th:href="@{/admin-home}">Dash Board</a></li>
+      <li sec:authorize="isAuthenticated()" >
+        <a th:href="@{'/user-profile/'+ ${user.getId()}}">Profile</a>
+      </li>
+
+      <li sec:authorize="hasAnyRole('USER', 'ADMIN')" class="active"><a th:href="@{/my-book-case}">My BookCase</a></li>
+<!--      <li class="active"><a th:href="@{/mybookcase}">My BookCase</a></li>-->
+      <li sec:authorize="isAuthenticated()">
+        <form th:action="@{/logout}" method="post">
+          <button class="btn" type="submit">Log out</button>
+        </form>
+      </li>
+      <li sec:authorize="!isAuthenticated()"><a th:href="@{/login}">Login</a></li>
+      <li sec:authorize="!isAuthenticated()"><a th:href="@{/process_register}">Sign up</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main -->
+  <div id="main">
+    <div class="inner">
+      <!-- <h1>Products</h1>
+
+      <div class="image main">
+          <img src="../images/banner-image-6-1920x500.jpg" class="img-fluid" alt="" />
+      </div> -->
+
+
+
+      <div class="text-center"><a th:href="@{/}">Home</a>/BookCase</div>
+      <!-- <div class="text-center"><i class="bi bi-heart" style="font-size: 120px;"></i></div> -->
+      <h1 class="text-center">My BookCase</h1>
+      <div class="mt-5">
+        <table class="table">
+          <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col">Book Title</th>
+            <th scope="col">Brief</th>
+            <th scope="col">Content about.</th>
+            <th scope="col"></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:block th:each="book: ${listBooks}">
+            <th scope="row">
+              <a th:href="@{'/my-book-case/delete/'+ ${book.getBookTitle()}}" onclick="return confirm('Do you want to delete this bookcase?');"><i class="bi bi-trash"></i></a>
+            </th>
+            <td>
+              <div class="d-flex align-items-center">
+                <img th:src="@{/images/bookcase.png}"
+                     style="width: 170px;height: 150px;" alt="">
+              </div>
+            </td>
+            <td>
+              <div class="d-flex align-items-center" th:text="${book.getBookTitle()}"></div>
+            </td>
+            <td th:text="${book.getBrief()}"></td>
+            <td></td>
+            <td>
+              <div class="text-center">
+                <p class="my-1">Added on December 5, 2019</p>
+                <button class="btnn my-1">BookCase</button>
+              </div>
+
+            </td>
+          </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer id="footer">
+    <div class="inner">
+      <section>
+        <ul class="icons">
+          <li><a href="#" class="icon style2 fa-twitter"><span class="label">Twitter</span></a></li>
+          <li><a href="#" class="icon style2 fa-facebook"><span class="label">Facebook</span></a></li>
+          <li><a href="#" class="icon style2 fa-instagram"><span class="label">Instagram</span></a></li>
+          <li><a href="#" class="icon style2 fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        </ul>
+
+        &nbsp;
+      </section>
+
+      <ul class="copyright">
+        <li>Copyright © 2020 Company Name </li>
+        <li>Template by: <a href="https://www.phpjabbers.com/">PHPJabbers.com</a></li>
+      </ul>
+    </div>
+  </footer>
+
+</div>
+
+<!-- Scripts -->
+<script th:src="@{js/jquery.min.js}"></script>
+<script th:src="@{js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{js/jquery.scrolly.min.js}"></script>
+<script th:src="@{js/jquery.scrollex.min.js}"></script>
+<script th:src="@{js/main.js}"></script>
+
+</body>
+</html>

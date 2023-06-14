@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <title>Product</title>
+    <link rel="stylesheet" th:href="@{css/bootstrap/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{css/main.css}"/>
+    <noscript>
+        <link rel="stylesheet" th:href="@{css/noscript.css}"/>
+    </noscript>
+</head>
+<body class="is-preload">
+<!-- Wrapper -->
+<div id="wrapper">
+
+    <!-- Header -->
+    <header id="header">
+        <div class="inner">
+
+            <!-- Logo -->
+            <a href="homepage.html" class="logo">
+                <span class="fa fa-book"></span> <span class="title">Book Online Store Website</span>
+            </a>
+
+            <!-- Nav -->
+            <nav>
+                <ul>
+                    <li><a href="#menu">Menu</a></li>
+                </ul>
+            </nav>
+
+        </div>
+    </header>
+
+    <!-- Menu -->
+    <nav id="menu">
+        <h2>Menu</h2>
+        <ul>
+            <li><a href="homepage.html" class="active">Home</a></li>
+
+            <li><a th:href="@{/listcase}">Products</a></li>
+
+            <li><a href="index.html">Dash Board</a></li>
+
+            <li><a th:href="@{/logout}">Log Out</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main -->
+    <div id="main">
+        <div class="inner">
+            <h1>Products</h1>
+            <div class="image main">
+                <img src="../images/banner-image-6-1920x500.jpg" class="img-fluid" alt=""/>
+            </div>
+            <!-- Products -->
+            <section class="tiles">
+                <th:block th:each="bookCase: ${listBookCase}">
+                    <article class="style2">
+                        <span class="image">
+                            <img src="../images/product-2-720x480.jpg" alt=""/>
+                        </span>
+                        <a href="listbook">
+                            <h2 style="color: black; font-size: 30px" th:text="${bookCase.name}"></h2>
+                            <p>
+                                <del>$690.00</del><br>
+                                <strong style="font-size: 27px; color: #ffc513">$260.00</strong></p>
+                            <p style="color: black">Books are knowledge and treasures of human life, please read book </p>
+                        </a>
+                    </article>
+                </th:block>
+            </section>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="inner">
+            <section>
+                <ul class="icons">
+                    <li><a href="#" class="icon style2 fa-twitter"><span class="label">Twitter</span></a></li>
+                    <li><a href="#" class="icon style2 fa-facebook"><span class="label">Facebook</span></a></li>
+                    <li><a href="#" class="icon style2 fa-instagram"><span class="label">Instagram</span></a></li>
+                    <li><a href="#" class="icon style2 fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                </ul>
+
+                &nbsp;
+            </section>
+
+            <ul class="copyright">
+                <li>Copyright © 2020 Company Name</li>
+                <li>Template by: <a href="https://www.phpjabbers.com/">PHPJabbers.com</a></li>
+            </ul>
+        </div>
+    </footer>
+
+</div>
+
+<!-- Scripts -->
+<script th:src="@{../js/jquery.min.js}"></script>
+<script th:src="@{../js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{../js/jquery.scrolly.min.js}"></script>
+<script th:src="@{../js/jquery.scrollex.min.js}"></script>
+<script th:src="@{../js/main.js}"></script>
+</body>
+</html>

@@ -1,0 +1,238 @@
+<!doctype html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:tr="https://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>User list</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" th:href="@{images/favicon.ico}"/>
+    <link rel="stylesheet" th:href="@{css/backend-plugin.min.css}">
+    <link rel="stylesheet" th:href="@{css/backend.css?v=1.0.0}">
+    <link rel="stylesheet" th:href="@{vendor/line-awesome/dist/line-awesome/css/line-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{vendor/remixicon/fonts/remixicon.css}">
+
+    <link rel="stylesheet" th:href="@{vendor/tui-calendar/tui-calendar/dist/tui-calendar.css}">
+    <link rel="stylesheet" th:href="@{vendor/tui-calendar/tui-date-picker/dist/tui-date-picker.css}">
+    <link rel="stylesheet" th:href="@{vendor/tui-calendar/tui-time-picker/dist/tui-time-picker.css}">
+</head>
+<body class="  ">
+<!-- loader Start -->
+<div id="loading">
+    <div id="loading-center">
+    </div>
+</div>
+<!-- loader END -->
+<!-- Wrapper Start -->
+<div class="wrapper">
+    <div class="iq-sidebar  sidebar-default ">
+        <div class="iq-sidebar-logo d-flex align-items-center">
+            <a th:href="@{/admin-home}" class="header-logo">
+                <img th:src="@{images/logo.svg}" alt="logo">
+                <h3 class="logo-title light-logo">Book</h3>
+            </a>
+            <div class="iq-menu-bt-sidebar ml-0">
+                <i class="las la-bars wrapper-menu"></i>
+            </div>
+        </div>
+        <div class="data-scrollbar" data-scroll="1">
+            <nav class="iq-sidebar-menu">
+                <ul id="iq-sidebar-toggle" class="iq-menu">
+                    <li class="">
+                        <a th:href="@{/admin-home}" class="svg-icon">
+                            <svg class="svg-icon" width="25" height="25" xmlns="http://www.w3.org/2000/svg"
+                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                 stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                            </svg>
+                            <span class="ml-4">Dashboards</span>
+                        </a>
+                    </li>
+                    <li class=" ">
+                        <a th:href="@{/dashboard_book_list}" class="collapsed">
+                            <svg class="svg-icon" id="p-dash14" width="20" height="20"
+                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="14" width="7" height="7"></rect>
+                                <rect x="3" y="14" width="7" height="7"></rect>
+                            </svg>
+                            <span class="ml-4">Book</span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a th:href="@{/user-list-dashboard}" class="collapsed">
+                            <svg class="svg-icon" id="p-dash10" width="20" height="20"
+                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="8.5" cy="7" r="4"></circle>
+                                <polyline points="17 11 19 13 23 9"></polyline>
+                            </svg>
+                            <span class="ml-4">User Details</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="pt-5 pb-2"></div>
+        </div>
+    </div>
+    <div class="iq-top-navbar">
+        <div class="iq-navbar-custom">
+            <nav class="navbar navbar-expand-lg navbar-light p-0">
+                <div class="iq-navbar-logo d-flex align-items-center justify-content-between">
+                    <i class="ri-menu-line wrapper-menu"></i>
+                    <a th:href="@{/admin-home}" class="header-logo">
+                        <h4 class="logo-title text-uppercase">Webkit</h4>
+
+                    </a>
+                </div>
+                <div class="navbar-breadcrumb">
+                    <h5>Dashboard</h5>
+                </div>
+                <div class="d-flex align-items-center">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse"
+                            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-label="Toggle navigation">
+                        <i class="ri-menu-3-line"></i>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ml-auto navbar-list align-items-center">
+                            <li class="nav-item nav-icon dropdown caption-content">
+                                <a href="#" class="search-toggle dropdown-toggle  d-flex align-items-center"
+                                   id="dropdownMenuButton4"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <img th:src="@{images/user/1.jpg}" class="img-fluid rounded-circle" alt="user">
+                                    <div class="caption ml-3">
+                                        <h6 class="mb-0 line-height">Savannah Nguyen<i
+                                                class="las la-angle-down ml-2"></i></h6>
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-right border-none"
+                                    aria-labelledby="dropdownMenuButton">
+                                    <li class="dropdown-item  d-flex svg-icon border-top">
+                                        <svg class="svg-icon mr-0 text-primary" id="h-05-p" width="20"
+                                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                             stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                  d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                                        </svg>
+                                        <a th:href="@{/}">Back Home</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <div class="content-page">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between">
+                            <div class="header-title">
+                                <h4 class="card-title">User List</h4>
+                            </div>
+                            <!--            <a href="../backend/user-add.html" class="btn btn-primary" >Add User</a>-->
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="data-table table" style="width:100%">
+                                    <thead>
+                                    <tr>
+                                        <th>Profile</th>
+                                        <th>UserName</th>
+                                        <th>Full Name</th>
+                                        <th>Email</th>
+                                        <th>Phone No.</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="listUser: ${listUser}">
+                                        <td>
+                                            <img th:src="@{images/user/01.jpg}" class="rounded avatar-40 img-fluid"
+                                                 alt="">
+                                        </td>
+                                        <td th:text="${listUser.username}"></td>
+                                        <td th:text="${listUser.firstName} + ${listUser.lastName}"></td>
+                                        <td th:text="${listUser.email}"></td>
+                                        <td th:text="${listUser.phone}"></td>
+                                        <td>
+                                            <div class="d-flex align-items-center list-action">
+                                                <a class="badge bg-warning-light mr-2" data-toggle="tooltip"
+                                                   data-placement="top" title="" data-original-title="Rating"
+                                                   href="#"><i class="far fa-star"></i></a>
+                                                <a class="badge bg-success-light mr-2" data-toggle="tooltip"
+                                                   data-placement="top" title="" data-original-title="View"
+                                                   href="#"><i class="lar la-eye"></i></a>
+                                                <span class="badge bg-primary-light" data-toggle="tooltip"
+                                                      data-placement="top" title="" data-original-title="Action"
+                                                      href="#">
+                                        <div class="dropdown">
+                                           <span class="text-primary dropdown-toggle action-item" id="moreOptions1"
+                                                 data-toggle="dropdown" aria-haspopup="true"
+                                                 aria-expanded="false" href="#">
+
+                                           </span>
+                                           <div class="dropdown-menu" aria-labelledby="moreOptions1">
+
+                                              <a class="dropdown-item" href="#">Ban</a>
+                                              <a class="dropdown-item" href="#">Hide from Contacts</a>
+                                           </div>
+                                        </div>
+                                  </span>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Wrapper End-->
+
+<!-- Modal list start -->
+<footer class="iq-footer">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6">
+            </div>
+            <div class="col-lg-6 text-right">
+                <span class="mr-1"><script>document.write(new Date().getFullYear())</script>©</span> <a href="#"
+                                                                                                        class="">Webkit</a>.
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Backend Bundle JavaScript -->
+<script th:src="@{js/backend-bundle.min.js}"></script>
+
+<!-- Table Treeview JavaScript -->
+<script th:src="@{js/table-treeview.js}"></script>
+
+<!-- Chart Custom JavaScript -->
+<script th:src="@{js/customizer.js}"></script>
+
+<!-- Chart Custom JavaScript -->
+<script async th:src="@{js/chart-custom.js}"></script>
+<!-- Chart Custom JavaScript -->
+<script async th:src="@{js/slider.js}"></script>
+
+<!-- app JavaScript -->
+<script th:src="@{js/app.js}"></script>
+
+<script th:src="@{vendor/moment.min.js}"></script>
+</body>
+</html>
